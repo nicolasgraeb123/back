@@ -14,8 +14,11 @@ SECRET_KEY = os.getenv("SECRET_KEY", secret )
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 4
 
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt_sha256", "bcrypt"],
+    default="bcrypt_sha256",
+    deprecated="auto",
+)
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
