@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from routers import router as auth_router
+from fastapi.middleware.cors import CORSMiddleware
+from fundraiser_router import router as fundraiser_router
 
 app = FastAPI(
     title="Hackathon API",
@@ -8,7 +10,21 @@ app = FastAPI(
     version="1.0.0"
 )
 
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(auth_router)
+app.include_router(fundraiser_router)
 
 @app.get("/")
 async def read_root():

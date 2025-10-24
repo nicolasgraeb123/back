@@ -136,7 +136,6 @@ async def register_user(user_data: UserRegister, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    """Logowanie użytkownika"""
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -154,6 +153,7 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
         "access_token": access_token,
         "token_type": "bearer"
     }
+
 
 @router.get("/me")
 async def read_users_me(current_user = Depends(get_current_user)):

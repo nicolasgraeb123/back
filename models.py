@@ -28,6 +28,7 @@ class Fundraise(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     raised_money: Mapped[Optional[float]] = mapped_column(Numeric(12, 2), nullable=True)
+    target_money: Mapped[Optional[float]] = mapped_column(Numeric(12, 2), nullable=True)
     finished: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     start_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
     end_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
