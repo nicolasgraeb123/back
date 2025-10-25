@@ -157,7 +157,6 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
 
 @router.get("/me")
 async def read_users_me(current_user = Depends(get_current_user)):
-    """Pobiera informacje o aktualnie zalogowanym użytkowniku"""
     return {
         "id": current_user.id,
         "username": current_user.username,
