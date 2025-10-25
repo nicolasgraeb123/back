@@ -47,7 +47,7 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(150), nullable=False, uniqTrue)
+    username: Mapped[str] = mapped_column(String(150), nullable=False, unique=True)
     mail: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     pass_: Mapped[str] = mapped_column("pass", String(255), nullable=False)
     total_spent: Mapped[Optional[float]] = mapped_column(Numeric(12, 2), nullable=True)
