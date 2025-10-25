@@ -146,7 +146,7 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
     
     access_token_expires = timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS)
     access_token = create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.username, "user_id": user.id}, expires_delta=access_token_expires
     )
     
     return {

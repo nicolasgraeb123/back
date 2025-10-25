@@ -159,7 +159,7 @@ async def make_donation(donation: DonationRequest, db: Session = Depends(get_db)
         # Aktualizuj raised_money w zbiórce (konwersja Decimal -> float -> Decimal)
         current_raised = float(fundraise.raised_money) if fundraise.raised_money else 0.0
         new_raised = current_raised + donation.amount
-        fundraise.raised_money = float(str(new_raised))
+        fundraise.raised_money = new_raised
 
 
         # Sprawdź czy istnieje już wpis dla tego użytkownika i zbiórki
@@ -172,13 +172,13 @@ async def make_donation(donation: DonationRequest, db: Session = Depends(get_db)
             # Aktualizuj istniejącą wpłatę
             current_money = float(existing_donation.money_summary) if existing_donation.money_summary else 0.0
             new_money = current_money + donation.amount
-            existing_donation.money_summary = float(str(new_money))
+            existing_donation.money_summary = new_money
         else:
             # Utwórz nową wpłatę
             new_donation = UserFundraise(
                 user_id=donation.user_id,
                 fundraise_id=donation.fundraise_id,
-                money_summary=float(str(donation.amount))
+                money_summary=donation.amount
             )
             db.add(new_donation)
 
@@ -189,7 +189,7 @@ async def make_donation(donation: DonationRequest, db: Session = Depends(get_db)
         # Aktualizuj total_spent użytkownika (konwersja Decimal -> float -> Decimal)
         current_spent = float(user.total_spent) if user.total_spent else 0.0
         new_spent = current_spent + donation.amount
-        user.total_spent = float(str(new_spent))
+        user.total_spent = new_spent
 
         # Commit transakcji
         db.commit()
