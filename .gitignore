@@ -4,3 +4,8 @@ venv/
 .idea
 __pycache__/
 .idea/
+.env
+*.pyc
+*.pyo
+*.pyd
+.DS_Store

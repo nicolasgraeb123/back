@@ -25,11 +25,15 @@ class FundraiserCreate(BaseModel):
 
 @router.post('/create')
 async def create(data: FundraiserCreate , db = Depends(get_db)):
-    db.add(Fundraise(
+    fundraise = Fundraise(
         title = data.title,
         description = data.description,
         raised_money = data.raised_money,
         finished = data.finished,
         start_date = data.start_date,
         end_date = data.end_date
-    ))
+    )
+    db.add(fundraise)
+    db.commit()
+    db.refresh(fundraise)
+    return {"message": "Fundraiser created successfully", "id": fundraise.id}

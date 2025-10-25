@@ -29,12 +29,15 @@ async def donation(data: donationsInfo, db=Depends(get_db)):
             'chuj': "zbiorka sie zakonczyla debilu"
         }
     else:
-
-        db.add(UserFundraise(
+        donation = UserFundraise(
             user_id=data.user_id,
             fundraise_id=data.fundraise_id,
             money_summary=data.points
-            ))
+        )
+        db.add(donation)
+        db.commit()
+        db.refresh(donation)
+        return {"message": "Donation added successfully", "id": donation.id}
 
 
 

@@ -13,6 +13,10 @@ if not database_url:
             "export DATABASE_URL='postgresql+psycopg://user:pass@localhost:5432/mydb'"
         )
 
+# Konwersja dla Heroku - postgres:// -> postgresql://
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(database_url, echo=True, future=True)
 Base.metadata.create_all(engine)
 print("✅ Tabele zostały utworzone.")
