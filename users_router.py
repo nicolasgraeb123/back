@@ -157,9 +157,13 @@ async def make_donation(donation: DonationRequest, db: Session = Depends(get_db)
             )
 
         # Aktualizuj raised_money w zbiórce (konwersja Decimal -> float -> Decimal)
+
         current_raised = float(fundraise.raised_money) if fundraise.raised_money else 0.0
         new_raised = current_raised + donation.amount
+        user = select(User).where(User.id == donation.user_id).first()
+        user.total_spent += donation.amount
         fundraise.raised_money = float(str(new_raised))
+
 
         # Sprawdź czy istnieje już wpis dla tego użytkownika i zbiórki
         existing_donation = db.query(UserFundraise).filter(
